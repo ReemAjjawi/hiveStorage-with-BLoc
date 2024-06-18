@@ -17,12 +17,6 @@ class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
       if (response is ListOf<AnimalModel>) {
         List<AnimalModel> animals = response.data;
 
-        Hive.openBox('animals');
-        var box = Hive.box('animals');
-        box.put('animals', animals);
-        box.get('animals', defaultValue: [] as ListOf<AnimalModel>);
-
-        emit(AnimalListSuccess(animals: response.data));
         // (animals: response)); ليش مابعتنا بس ريسبونس وشو بصير لوو قلنا
         //   if (response is List <AnimalModel>) {
       } else {
