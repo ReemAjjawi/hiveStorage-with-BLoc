@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:hive_flutter/adapters.dart';
+
 import 'handling.dart';
 
 class ListOf<T> extends ResultModel {
@@ -10,9 +12,14 @@ class ListOf<T> extends ResultModel {
   });
 }
 
-class AnimalModel extends ResultModel {
+@HiveType(typeId: 0)
+class AnimalModel extends HiveObject {
+  @HiveField(0)
   String name;
+
+  @HiveField(1)
   String image;
+
   AnimalModel({
     required this.name,
     required this.image,
@@ -59,4 +66,23 @@ class AnimalModel extends ResultModel {
 
   @override
   int get hashCode => name.hashCode ^ image.hashCode;
+}
+
+class AnimalModelAdapter extends TypeAdapter<AnimalModel> {
+  @override
+  final int typeId = 0;
+
+  @override
+  AnimalModel read(BinaryReader reader) {
+    return AnimalModel(
+      name: reader.readString(),
+      image: reader.readString(),
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, AnimalModel obj) {
+    writer.writeString(obj.name);
+    writer.writeString(obj.image);
+  }
 }
