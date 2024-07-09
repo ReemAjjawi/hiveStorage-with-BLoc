@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:first_homework_hive_sm/model/animal_model.dart';
-import 'package:first_homework_hive_sm/connection_status/event_with_state.dart';
+import 'package:first_homework_hive_sm/view.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 

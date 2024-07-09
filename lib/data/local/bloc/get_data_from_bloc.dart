@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:first_homework_hive_sm/data/remote/bloc/animal_bloc.dart';
 import 'package:first_homework_hive_sm/model/handling.dart';
@@ -17,9 +19,10 @@ class GetDataFromBloc extends Bloc<GetDataFromEvent, GetDataFromState> {
     initialize();
 
     on<GetLocalDataEvent>((event, emit) async {
-            print(" iam in load more data");
+            log(" iam in get local");
 
       if (myList.isNotEmpty) {
+        log("list is empty");
         emit(LocalStorageState(Data: myList));
       } else {
         emit(LocalStorageState(Data: []));
@@ -27,7 +30,7 @@ class GetDataFromBloc extends Bloc<GetDataFromEvent, GetDataFromState> {
     });
 
     on<LoadMoretDataEvent>((event, emit) async {
-      print(" iam in load more data");
+      log(" iam in load more data");
       final additionalItems = loadMoreData(event.pageId);
       myList.addAll(additionalItems);
       emit(LocalStorageState(
@@ -38,7 +41,7 @@ class GetDataFromBloc extends Bloc<GetDataFromEvent, GetDataFromState> {
 
   Future<void> initialize() async {
     box = await Hive.openBox<List<AnimalModel>>('animals');
-            print("iam in local");
+            log("iam in local");
 
             print(box.get('animals', defaultValue: []));
 
@@ -47,6 +50,9 @@ class GetDataFromBloc extends Bloc<GetDataFromEvent, GetDataFromState> {
     if (storedAnimals != null && storedAnimals.isNotEmpty) {
       myList = (storedAnimals as List<AnimalModel>).take(10).toList();
       add(GetLocalDataEvent());
+    }
+    else{
+      log("we dont have any information");
     }
   }
 

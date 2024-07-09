@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:first_homework_hive_sm/connection_status/state_network.dart';
@@ -9,10 +10,14 @@ import 'event_network.dart';
 class InternetBloc extends Bloc<InternetEvent, InternetState> {
   StreamSubscription? subscription;
   InternetBloc() : super(InternetInitial()) {
+    log("iam check status of connection");
     on<InternetEvent>((event, emit) {
       if (event is ConnectedEvent) {
+        log("iam in internetBloc ============================ConnectedEvent ");
         emit(ConnectedState(message: "Connected"));
       } else if (event is NotConnectedEvent) {
+        log("iam in internetBloc ============================NotConnectedEvent ");
+
         emit(NotConnectedState(message: "Not Connected"));
       }
     });
@@ -22,10 +27,11 @@ class InternetBloc extends Bloc<InternetEvent, InternetState> {
         .listen((List<ConnectivityResult> result) {
       if (result.contains(ConnectivityResult.mobile) ||
           result.contains(ConnectivityResult.wifi)) {
-        print("hu");
+        log("Myyyyyyyyyyyy internet");
         add(ConnectedEvent());
-        print("hu2");
+        print(result);
       } else {
+        log("there is no internet");
         add(NotConnectedEvent());
       }
     });

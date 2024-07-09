@@ -79,6 +79,7 @@ class _MyDataPageState extends State<MyDataPage> {
                         itemBuilder: (context, index) {
                           if (index < state.Data.length) {
                             return ListTile(
+                             
                               //   leading: Image.network(state.animals[index].image),
                               title: Text(state.Data[index].name),
                             );
