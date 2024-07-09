@@ -12,8 +12,9 @@ class AnimalListSuccess extends AnimalState {
   });
 }
 
+
 class ErrorState extends AnimalState {}
 
 class LoadingState extends AnimalState {}
 
-class SuccessAnimalCreated extends AnimalState {}
+
