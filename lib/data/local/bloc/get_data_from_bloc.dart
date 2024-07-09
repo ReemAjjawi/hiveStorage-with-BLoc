@@ -17,6 +17,8 @@ class GetDataFromBloc extends Bloc<GetDataFromEvent, GetDataFromState> {
     initialize();
 
     on<GetLocalDataEvent>((event, emit) async {
+            print(" iam in load more data");
+
       if (myList.isNotEmpty) {
         emit(LocalStorageState(Data: myList));
       } else {
@@ -25,6 +27,7 @@ class GetDataFromBloc extends Bloc<GetDataFromEvent, GetDataFromState> {
     });
 
     on<LoadMoretDataEvent>((event, emit) async {
+      print(" iam in load more data");
       final additionalItems = loadMoreData(event.pageId);
       myList.addAll(additionalItems);
       emit(LocalStorageState(
@@ -39,7 +42,7 @@ class GetDataFromBloc extends Bloc<GetDataFromEvent, GetDataFromState> {
 
             print(box.get('animals', defaultValue: []));
 
-    final storedAnimals = box.get('animals', defaultValue: []);
+    final storedAnimals = await box.get('animals', defaultValue: []);
     
     if (storedAnimals != null && storedAnimals.isNotEmpty) {
       myList = (storedAnimals as List<AnimalModel>).take(10).toList();
